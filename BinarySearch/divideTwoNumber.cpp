@@ -23,9 +23,13 @@ int getQuotient(int divisor, int divident){
 }
 int main() {
   int divisor = 7;
-  int divident = 42;
+  int divident = -42;
 
-  int ans = getQuotient(divisor, divident);
+  int ans = getQuotient(abs(divisor), abs(divident)); //passing positive and divident even thought it is negative but at last checking if no. is negative marking him as a negative
+
+  if((divident < 0 && divisor > 0) || (divident > 0 && divisor < 0)){
+    ans = -ans;
+  }
 
   cout << "Your Answer is : " << ans << endl;
 
