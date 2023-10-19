@@ -1,10 +1,3 @@
-/******************************************************************************
-
-                              Online C++ Compiler.
-               Code, Compile, Run and Debug C++ program online.
-Write your code in this editor and press "Run" button to compile and execute it.
-
-*******************************************************************************/
 
 #include <iostream>
 #include <vector>
@@ -55,13 +48,11 @@ int main()
 //  }
  
  //2 recursive fn to call printDigit;
- vecttor<int>num{43215};
+int num = 43215;
+int index = 0;
  vector<int>ans;
- printDigit(num, ans);
- for(int num: ans){
-     cout << num << endl; 
- }
-   
-
+ printDigit(num, 0, ans);
+ for(int digit: ans){
+     cout << digit << " "; 
     return 0;
 }
