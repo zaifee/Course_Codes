@@ -3,116 +3,113 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-//a function that handle all the below possiblities 
-//3 edge case hai 
-    //path closed 
-    //outof bound 
-    //check it is possible it is already visited -- making a fun to handle to handle all these cases
-bool isSafe(int srcx, int srcy, int newx, int newy,int maze[][4], int row, int col, vector<vector<bool> >&visited){
+bool isSafe(int srcx, int srcy, int maze[][4],int newx, int newy, int row, int col,vector<vector<bool> >&visited){
     
-    //path closed + outof bound 
-    if(
-        (newx >= 0 && newx < row) && (newy >= 0 && newy < col)  && maze[srcx][srcy] == 1 
-      && visited[newx][newy] = false;
-    ){
-    return true;
-    }
+    if( 
+        (newx >= 0 && newx < row) &&
+        (newy >= 0 && newy < col) &&
+        maze[newx][newy] == 1 &&
+        visited[newx][newy] == false //pichli bar yaha galti kari thi 
+        
+        )
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
     
-    else{
-        return false;
-    }
 }
-
-
-
-
-void printAllPath(int maze, int row, int col, int srcx, int srcy, string &output, vector<vector<bool> >&visited){
+void printAllPath(int maze[][4], int row, int col, int srcx, int srcy, string &output,  vector<vector<bool> >&visited){
     
-    //destination x and destination y --> des[row-1] or dest[col-1]; 
-    
+    //base case 
     if(srcx == row-1 && srcy == col-1){
-        //reached destination 
+        //reached at the destination so print ouput
         cout << output << endl;
+       
         return;
     }
     
-    //1 case solve karo baki rec dekh lega 
+    
+    //handle three cases 
+    //outofbound
+    //open path indicating by 1 
+    //mark visited -- isSafe
     
     
-    //order of up, down , right, and left doesn't matter 
-    
-    // up 
-    //3 edge case hai 
-    //path closed 
-    //outof bound 
-    //check it is possible it is already visited -- making a fun to handle to handle all these cases 
+    //UP 
     int newx = srcx-1;
     int newy = srcy;
-    if(isSafe(maze, srcx, srcy, newx, newy, row, col, visited)){
-        //mark visited 
+    if(isSafe(srcx,srcy,maze, newx, newy, row, col,visited)){
+        
+        //mark visised 
         visited[newx][newy] = true;
-        //call recursi 
-        printAllPath(maze, row, col, newx, newy, output + "U", visited)
+        
+        //recusive call 
+        output.push_back('U');
+        printAllPath(maze, row, col, srcx, srcy, output, visited);
+        
         //backtracking 
-        isited[newx][newy] = false;
-        
-        
+        output.pop_back();
+        visited[newx][newy] = false;
+       
     }
-    
-    
-    
     
     //down 
-    
-     int newx = srcx+1;
-    int newy = srcy;
-    if(isSafe(maze, srcx, srcy, newx, newy, row, col, visited)){
-        //mark visited 
+   
+     newx = srcx+1;
+     newy = srcy;
+    if(isSafe(srcx,srcy,maze, newx, newy, row, col,visited)){
+        
+        //mark visised 
         visited[newx][newy] = true;
-        //call recursi 
-        printAllPath(maze, row, col, newx, newy, output + "D", visited)
+        
+        //recusive call 
+        output.push_back('D');
+        printAllPath(maze, row, col, srcx, srcy, output, visited);
+        
         //backtracking 
-        isited[newx][newy] = false;
-        
-        
+        output.pop_back();
+        visited[newx][newy] = false;
+       
     }
-    
-    
-    
-    //right 
-     int newx = srcx;
-    int newy = srcy+1;
-    if(isSafe(maze, srcx, srcy, newx, newy, row, col, visited)){
-        //mark visited 
-        visited[newx][newy] = true;
-        //call recursi 
-        printAllPath(maze, row, col, newx, newy, output + "R", visited)
-        //backtracking 
-        isited[newx][newy] = false;
-        
-        
-    }
-    
-    
     
     //left 
-     int newx = srcx;
-    int newy = srcy-1;
-    if(isSafe(maze, srcx, srcy, newx, newy, row, col, visited)){
-        //mark visited 
+    
+     newx = srcx;
+     newy = srcy-1;
+    if(isSafe(srcx,srcy,maze, newx, newy, row, col,visited)){
+        
+        //mark visised 
         visited[newx][newy] = true;
-        //call recursi 
-        printAllPath(maze, row, col, newx, newy, output + "L", visited)
+        
+        //recusive call 
+        output.push_back('L');
+        printAllPath(maze, row, col, srcx, srcy, output, visited);
+        
         //backtracking 
-        isited[newx][newy] = false;
-        
-        
+        output.pop_back();
+        visited[newx][newy] = false;
+       
     }
     
-    
-    
-    
-    
+    //right 
+     newx = srcx;
+     newy = srcy+1;
+    if(isSafe(srcx,srcy,maze, newx, newy, row, col,visited)){
+        
+        //mark visised 
+        visited[newx][newy] = true;
+        
+        //recusive call 
+        output.push_back('R');
+        printAllPath(maze, row, col, srcx, srcy, output, visited);
+        
+        //backtracking 
+        output.pop_back();
+        visited[newx][newy] = false;
+       
+    }
     
     
     
@@ -124,29 +121,26 @@ void printAllPath(int maze, int row, int col, int srcx, int srcy, string &output
 int main()
 {
    int maze[4][4] = {
-      {1,0,0,0},
-      {1,1,0,1},
-      {1,1,0,1},
-      {1,1,1,1}
+       {1,0,0,0},
+       {1,1,0,0},
+       {1,1,1,0},
+       {1,1,1,1}
       
    };
-   
-   int row = 4, col=4;
+   int row = 4, col = 4;
    int srcx = 0;
    int srcy = 0;
+   vector<vector<bool> >visited(row, vector<bool>(col, false));
    string output = "";
-   
-//   creating a 2d array  -- 
-vector<vector<bool> >visited(row, vector<bool>(col, false));
-   if(maze[0][0] == 0){
-       cout << "No Path Exist " << endl;
-   }
-   else{
-   visited[srcx][srcy] = true;
-   printAllPath(maze, row, col, srcx, srcy, output);
+   if(maze[0][0] == 0){  //yaha galti ki
+       cout << "Not Path Exist " << endl;
+   }else{
+       visited[srcx][srcy] = true;
+     printAllPath(maze, row, col, srcx, srcy,output, visited);
    }
    
+    return 0;
+   
+   }
    
 
-    return 0;
-}
