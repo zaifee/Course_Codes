@@ -1,38 +1,45 @@
+/******************************************************************************
 
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
 
 #include <iostream>
 
 using namespace std;
-void printPermutations(string &str, int index){
+void permutationOfString(string &s, int i){
     
     //base case 
-    if(index >= str.length()){
-        cout << str << " ";
-         return;
+    if(i >= s.length()){
+        cout << s << " ";
+        return;
     }
-   
     
-    //1 case solve karlo 
-    // for every character of index of i   j ki har position par try kar rahe hai 
-    for(int j=index; j<str.length(); j++){
-        //swap index ko j and index 
-        swap(str[j], str[index]);
+    //i ki har position par j ko rakh kar dekhna hai -- so we want loop 
+    for(int j=i; j<s.length(); j++){ //j <= s.length() galti ki thi 
         
-        //recursive call 
-        printPermutations(str, index+1);
+        swap(s[j], s[i]);
         
-        //backtracking 
-        swap(str[j],str[index]);
+        permutationOfString(s, i+1);
         
+        
+        //backtracking -- doing bcz of we passed the string by reference 
+        swap(s[j], s[i]);
     }
     
     
 }
+
+
+
 int main()
 {
     string s = "abc";
-    int index = 0;
-    printPermutations(s, index);
+    int i = 0;
+    permutationOfString(s, i); 
+    
 
     return 0;
 }
