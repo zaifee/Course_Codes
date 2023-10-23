@@ -1,13 +1,11 @@
+class Solution {
+public:
 
-#include <iostream>
-#include <vector>
-using namespace std;
-
-void merge(int arr[], int s, int e){
-    int mid  = s + (e-s)/2;
+void merge(vector<int>&arr, int s, int e){
+   int  mid  = s + (e-s)/2;
     
-    int  lenLeft = s-mid+1;
-    int lenRight = e-(mid+1);
+    int  lenLeft = mid-s+1;
+    int lenRight = e-mid;
     
     int *leftArray = new int[lenLeft];
     int *rightArray = new int[lenRight];
@@ -33,7 +31,7 @@ void merge(int arr[], int s, int e){
     int rightIndex = 0;
     
     //yaha par galti hogi 
-    int mainIndex = 0;
+    int mainIndex = s;
     
     
     while(leftIndex < lenLeft && rightIndex < lenRight){
@@ -51,28 +49,32 @@ void merge(int arr[], int s, int e){
     }
     
     // 2 more case if left Array exhaust right remains 
-    while(rightArray < rightIndex){
+    while(rightIndex < lenRight){ //yaha rightIndex ki while loop me galti ki thi
          arr[mainIndex] = rightArray[rightIndex];
             mainIndex++;
             rightIndex++;
     }
     
     // if right array exhaus -- left remains 
-    while(leftArray < leftIndex){
+    while(leftIndex < lenLeft){  //yaha while  ki condition me galti ki thi
         arr[mainIndex] = leftArray[leftIndex];
         mainIndex++;
         leftIndex++;
     }
     
+    //okay yaha galti ki  thi ye delete karna bhul gya ;
+    delete [] leftArray;
+    delete [] rightArray;
+    
 }
 
 
-void mergeSort(int &arr[], int s, int e, int mid){
+void mergeSort(vector<int>&arr, int s, int e){
     
     //base case 
     if(s >= e) return;
     
-    int mid = s + (e-s)/2;
+   int  mid = s + (e-s)/2;
     
     //left arrya 
     mergeSort(arr, s, mid);
@@ -84,17 +86,10 @@ void mergeSort(int &arr[], int s, int e, int mid){
 }
 
 
-int main()
-{
-   
-   vector<int>arr{2,1,9,7,4,6};
-   int s = 0, e = arr.size()-1;
-   mergeSort(arr, s, e);
-   
-   for(int i=0; i<arr.size(); i++){
-      cout << arr[i] << endl;
-   }
-   
-
-    return 0;
-}
+    vector<int> sortArray(vector<int>& nums) {
+        int s = 0;
+        int e = nums.size()-1;
+        mergeSort(nums, s, e);
+        return nums;
+    }
+};
