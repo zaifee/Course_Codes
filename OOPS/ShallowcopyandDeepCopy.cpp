@@ -16,6 +16,12 @@ void print() const{
 //     x = obj.x;
 //     y = new int(*obj.y); //it will make a new copy for y now y points to anoter location 
 // }
+
+
+//desturctor 
+~abc(){
+    delete y;
+}
     
     
 };
@@ -24,21 +30,29 @@ void print() const{
 
 int main()
 {
-    abc a{1,2};
-    a.print();
+    // abc a{1,2};
+    // a.print();
     
-    abc b = a;
+    // abc b = a;
    
+    // b.print();
+    
+    // //changing value of y;
+    // cout << "Printing the value of b after changing " << endl;
+    // *b.y = 20;
+    
+    // b.print();
+    
+    // cout << "Printing the value of a after changing " << endl;
+    // a.print();
+    
+    // -- don't use shallow copy when using pointers use deep copy 
+    
+    abc *a = new abc(1,2);
+    abc b = *a;
+    delete a;
     b.print();
     
-    //changing value of y;
-    cout << "Printing the value of b after changing " << endl;
-    *b.y = 20;
-    
-    b.print();
-    
-    cout << "Printing the value of a after changing " << endl;
-    a.print();
     
     
 
