@@ -5,51 +5,41 @@
 using namespace std;
 
 int main()
- {
-//     int *a = new int;
-//     *a = 2;
-//     cout << *a << endl;
-//     // delete a; 
+{
     
-//     int b = 5;
-//     a = &b;
-//     cout << *a << endl;  
-
-// 2. const data, but  pointer
-// const int *a = new int(5); //const int data 
-// int const *a = new int(5); same as line no 25
-// *a = 20;
-
-// cout << *a << endl; 
-// int b = 10;
-// a = &b;
-// cout << *a << endl;
+//Const data but variable Pointers data 
+   const int * a = new int(10); //is field me kya data dena hai wo hai 
+//   cout << *a << endl;
+//   cout << *a+1 << endl;
+   int b = 101;  //a husband b wife here  - #Const data but Var Pointers 
+   a = &b;
+//   cout << *a << endl; //Here data can be change through pointers
 
 
-// 3. const pointer, but change data 
-int *const a = new int(10);
-cout << *a << endl;
-*a = 43;
-cout << *a << endl;
 
-int b = 50;
-a = &b; //nhi chlega bcz of const pointer 
-cout << *a << endl;
+// 2. Case -- VAr data but Const pointer
+
+int *const d = new int(32);
+*d = 20;
+// cout << *d << endl;
+int gf = 10;
+d = &gf;
+cout << *d << endl;
 
 
 
 
-    
-    
-    
+
+   
+// 3. case both Const   
+   const int * const z = new int(5);
+//   cout << *z << endl;
+//   int c = 200;
+//   z = &c;
+//   cout << *z << endl; //let see husband win or wife win -- husband win here no data can be changed 
 
     return 0;
 }
-
-
-
-
-
 
 
 
