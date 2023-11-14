@@ -1,55 +1,52 @@
 #include <iostream>
 #include <stack>
 using namespace std;
-bool checkReduntant(string &s){
-  stack<char>st;
-
+bool checkRedundantBracket(string &s){
+ stack<char>st;
   for(int i=0; i<s.length(); i++){
+   
     char ch = s[i];
 
-    if(ch == '(' || ch=='+' || ch=='-' || ch=='*' ||  ch=='/'){
-       st.push(ch);
+    if(ch == '(' || ch == '+' || ch == '-' ||ch == '*' || ch == '/'){
+         st.push(ch);
     }
-    //clsoing bracket match kare or opertor count karte ja
     else if(ch == ')'){
-      int opertorCount = 0;
+      //closing bracket ke sath operator milege 
+      int operatorCount = 0;
 
-      while(!st.empty() && st.top() != '('){
-        char temp = st.top();
-
-        if(temp == '+' || temp == '-' || temp == '*' || temp == '/'){
-          opertorCount++;
-        }
-        st.pop();
-      }
-
-      //yaha par hmm jabhi pohuche ge jab opening bracket hoga;
-      //hamare stack ke top par opening bracker hoga 
+     while(!st.empty() && st.top() != '('){  //lyaha galti ki thi != ki jagah == laga rha tha
+     char temp = st.top();  //temp likhna bhul gaya tha
+       if(temp == '+' || temp == '-' || temp == '*' || temp== '/' ){
+             operatorCount++; //yaha increment karna bhul gaya 
+       }
+         
+       st.pop();
+     }
+     //isse bhar aaye ho to open bracket mil gaya hoga 
       st.pop();
 
-      if(opertorCount == 0){
+      if(operatorCount == 0){
         return true;
       }
     }
   }
-  //agar main yaha tak pohuha ho jab
-  // aapke stack k top pr ek opening bracket hoga 
-  // ek operator pakka mila hoga 
-    return false;
+  return false;
 }
+
+
+
 int main() {
   
- string s = "((a+b) * (c+d))";
+  string s = "((a+b)))";
 
- bool ans = checkReduntant(s);
+  bool ans = checkRedundantBracket(s);
 
- if(ans == true){
-  cout << "Reduntant bracket present" << endl;
- }
- else{
-  cout << "Reduntant bracket is not present " << endl;
- }
-
+  if(ans == true){
+     cout << "Redundant Bracket is present " << endl;
+  }
+  else{
+    cout << "Redundant Bracker is not present " << endl;
+  }
 
 
   return 0;
