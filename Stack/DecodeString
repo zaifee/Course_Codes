@@ -1,0 +1,56 @@
+class Solution {
+public:
+    string decodeString(string s) {
+        
+    stack<string>st;  //galti ki char data type lekar stack ka 
+    for(auto ch : s){
+
+      string stringToRepeat = "";
+        if(ch == ']'){
+         
+         while(!st.empty() && st.top() != "["){
+             string top = st.top();
+             stringToRepeat += top;
+             st.pop();
+
+         }
+    //poping open braces 
+    st.pop();
+
+
+    string numericRepeat = "";
+    while(!st.empty() && isdigit(st.top()[0])){
+        //top ke data type me galti ki
+        numericRepeat += st.top();
+        st.pop(); //ye bhul gaya tha
+    }
+    //reverse the numeric repeat 
+    reverse(numericRepeat.begin(), numericRepeat.end());
+    int n = stoi(numericRepeat); //convert into integer
+
+
+//final decoding 
+string currentDecoding = "";
+while(n--){
+    currentDecoding += stringToRepeat;
+}
+st.push(currentDecoding);
+
+     }else{
+         //push char into stack 
+        string temp(1, ch); //convering into char 
+            st.push(temp);
+         }
+        }
+  
+     string ans;
+        while(!st.empty()){
+            ans += st.top();
+            st.pop();
+        }
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
+
+
