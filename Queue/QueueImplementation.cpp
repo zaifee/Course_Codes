@@ -1,63 +1,120 @@
 #include <iostream>
-
+#include<stack>
+#include<queue>
 using namespace std;
-
-class queue{
+class Queue{
 public:
 int *arr;
 int size;
 int front;
 int rear;
 
-queue(int size){
-  arr = new int(size);
+ Queue(int size){
+  arr = new int[size];
   this->size = size;
   front = -1;
   rear = -1;
 }
 
+
 void push(int val){
-  //check full
-  if(rear == size-1){
-    cout << "Overflow" << endl;
-    return;
-  }
-  else if(front == rear == -1){
-    //not full
-    //empty case
-    front++; rear++;
-    arr[rear] = val;
-  }else{
-    //normal case 
-    rear++;
-    arr[rear] = val;
-  }
-  
+
+if(rear == size){
+  cout << "Overflow" << endl;
+  return; //ye yaad rakhna hai 
+}
+else if(front == -1 && rear == -1){
+  //empty wala case 
+  front++;
+  rear++;
+  arr[rear] = val;
+
+}else{
+  arr[rear] = val;
+  rear++;
 }
 
+
+
+}
 
 void pop(){
-  if(front == rear == -1){
-    cout << "Underflow ! cannot delete the element " << endl;
+  if(front == -1 && rear == -1){
+    cout << "Queue is empty no items can be deleted " << endl;
   }
   else if(front == rear){
-    //single element wala case
-    arr[rear] = -1;
-    front = -1;
+    //single element 
+    arr[front] = -1;  //delete front se hota hai or push rear se 
     rear = -1;
+    front = -1;
   }
   else{
-    //normal case 
     arr[front] = -1;
-    front++;
+    front++; 
   }
 }
 
+bool isEmpty(){
+  if(front == -1 && rear == -1){
+    return true;
+  }
+  else{
+    return false;
+  }
 
+}
+
+bool getSize(){
+  if(front == -1 && rear == -1){
+    return 0;
+  }
+  return rear-front+1;
+}
+
+int frontElement(){
+  if(front == -1){
+    return -1;
+  }else{
+    return arr[front];
+  }
+}
+
+int getRear(){
+  
+  return arr[rear];
+}
+
+void print(){
+  cout << "Printing the Queue.. ";
+  for(int i=front; i<=rear; i++){
+    cout << arr[i] << " ";
+  }
+  cout << endl;
+}
 
 };
-
 int main() {
-  cout << "Hello world!" << endl;
+  
+Queue q(5);
+q.push(1);
+q.push(10);
+q.push(20);
+q.push(2);
+q.push(3);
+
+q.print();
+cout << "size of queue " << q.getSize() << endl;
+
+cout << "Queue is empty or not " << q.isEmpty() << endl;
+q.push(5);
+q.print();
+q.pop();
+q.print();
+q.push(4);  //it will give the overflow rear me koi space nhi hai 
+cout << "size of queue " << q.getSize() << endl;
+cout << "front element " << q.frontElement() << endl;
+
+cout << "Rear element " << q.getRear() << endl;
+
   return 0;
 }
