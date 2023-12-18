@@ -38,15 +38,20 @@ void pushFront(int val){
 
 void pushBack(int val){
 //overflow 
-  if(front == 0 && rear == size-1 || (rear = front-1)){
+  if((front == 0 && rear == size-1 || (rear = front-1)){
     cout << "Overflow " << endl;
   }
-
-  else if(front == 0 && rear == size-1){
+  
+  else if(front == -1 && rear == -1){
     front++; rear++;
     arr[rear] = val;
   }
-
+    
+  else if(rear == size-1 && front != 0){
+    rear = 0;
+    arr[rear] = val;
+  }
+     
   else{
     rear++;
     arr[rear] = val;
