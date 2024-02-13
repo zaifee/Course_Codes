@@ -7,124 +7,119 @@ TrieNode* children[26];
 bool isTerminal;
 
 TrieNode(char val){
-    this->value = val;
-    for(int i=0; i<26; i++){
-        children = NULL;
-    }
-    
-    this->isTerminal = false;
+this->value = val;
+for(int i=0; i<26; i++){
+  children[i] = NULL;
 }
-    
-    
-    
+this->isTerminal = false;
+
+}
+
+
+
 };
+void insertWordInTrie(TrieNode* root, string word){
+  // cout << "Recevied word " << word << "for insertion " << endl;
+  if(word.length() == 0){
+    root->isTerminal = true; //with isTerminal we are marking end of the string 
+    return;
+  }
 
+  char value = word[0];
+  int index = value -'a';
+  TrieNode* child;
 
-bool searchWord(TrieNode* root, string word){
- 
- if(word.length() == 0){
-     return root->isTerminal; //it return terminal value 
- }   
- 
- char ch = word[0];
- int index = ch - 'a';
- TrieNode* child;
- 
- if(root->children[index] != NULL){
-     //present or not 
-     child = root->children[index];
- }
- else{
-     //not present 
-     return false;
- }
- //ek character ke liye solve kar liya hai 
- bool recurAns = searchWord(child, substr(1));
- return recurAns;
- 
+  if(root->children[index] != NULL){
+    //if present 
+    child = root->children[index];
+  }
+  else{
+    //not preset 
+    child = new TrieNode(value);
+    root->children[index] = child;
+  }
+
+  //baki case recursion dekh lega 
+  insertWordInTrie(child,  word.substr(1));
+  
+
 }
 
+bool searchNodeInTrie(TrieNode* root, string word){
 
+  if(word.length() == 0){
+    return root->isTerminal; //terminal Node pe the it will return true else return false;
+  }
 
-//insert at node 
-void insertWord(TrieNode* root, string word){
-    // cout << 
-    if(word.length() == 0){
-        root->isTerminal = true;
-        return;
-    }
-    
-    //Present or absent 
-    char ch = word[0]; //value 
-    int index = ch - 'a';
-    TreeNode* child;
-    
-    if(root->children != NULL){
-        //present 
-        child = root->children[index];
-    }
-    else{
-        //make a new Node and then traverse it 
-        child = new TrieNode(ch);
-        root->children[index] = child;
-        
-    }
-    
-    //recursion 
-    insertWord(child, word.substr(1));
-    
-}
+  char ch = word[0];
+  int index = ch-'a';
+  TrieNode* child;
 
-
-void deleteWord(TrieNode* root, string word){
-    if(word.length() == 0){
-        return->isTerminal = false; //node mil gyi false mark kar do
-    }
-    
-    // 1 case mera 
-    char ch = word[0];
-    int index = ch-'a';
-    TrieNode* chid;
-    
-    if(root->children[index] != NULL){
-        
-        //present 
-        child = root->children[index];
-    }
-    else{
-        //not present 
-        return;
-    }
+  if(root->children[index] != NULL){
+    //present of found 
+    child = root->children[index];
+  }
+  else{
+    //not found 
     return false;
+  }
+  bool recursiveAns = searchNodeInTrie(child, word.substr(1));
+  return recursiveAns;
+}
+
+void deleteWordFromTrie(TrieNode* root, string word){
+  if(word.length() == 0){
+    root->isTerminal = false;
+     return;
+  }
+
+  char value = word[0];
+  int index = value-'a';
+  TrieNode* child;
+
+  if(root->children[index] != 0){
+    //present hai traverse karte jao 
+    child = root->children[index];
+
+  }else{
+    //Not found
+    return;
+  }
+
+  //ek case solve ho gya baki recusion ko dedo 
+  deleteWordFromTrie(child, word.substr(1)); //substr remove the first character and starts from the second character
+
+
+
 }
 
 
 
 
 
-int main()
-{
-    TrieNode* root = new TrieNode('-');
-    
-    insertWord(root, "CATER");
-    insertWord(root, "CARE");
-    insertWord(root, "CoM");
-       insertWord(root, "LOVER");
-        insertWord(root, "LOVED");
-        insertWord(root, "LOAD");
-         insertWord(root, "BAT");
-          insertWord(root, "CAR");
-          insertWord(root, "CAT");
-          insertWord(root, "LOV");
-          
-          cout << "Insertion done " << endl;
-          
-          if(searchWord("CoM")){
-              cout << "Found " << endl;
-          }
-          else{
-              cout << "Not found " << endl;
-          }
 
-    return 0;
+
+int main() {
+  TrieNode* root = new TrieNode('-');
+  insertWordInTrie(root , "nawaz");
+  insertWordInTrie(root, "nawazish");
+  insertWordInTrie(root, "helloji");
+  cout << "Inserted Successfully " << endl;
+  
+  if(searchNodeInTrie(root,"nawaz")){
+    cout << "Found" << endl;
+  }
+  else{
+    cout << "Not Found" << endl;
+  }
+   deleteWordFromTrie(root, "nawaz");
+if(searchNodeInTrie(root,"nawaz")){
+    cout << "Found" << endl;
+  }
+  else{
+    cout << "Not Found" << endl;
+  }
+
+
+  return 0;
 }
