@@ -4,7 +4,7 @@
 #include<queue>
 using namespace std;
 
-template <typename> T;
+template <typename T>
 // class Graph{
 // public:
 // unordered_map<T,list<T> > adjList;
@@ -46,9 +46,9 @@ template <typename> T;
 
 class Graph{
 public:
-unordered_map<int, list<pair<int,int> > > adjList;
+unordered_map<T, list<pair<T,int> > > adjList;
 
-void addEdge(int u, int v, int wt, bool direction){
+void addEdge(T u, T v, int wt, bool direction){
   //if direction == 1 -> directed graph 
   // else direction == 0 -> undirected graph 
   if(direction == 1){
@@ -66,22 +66,24 @@ void addEdge(int u, int v, int wt, bool direction){
 void printEdgeList(){
   for(auto &i: adjList){
     cout << i.first << " : {";
-    for(pair<int,int> p: i.second){
+    for(pair<T,int> p: i.second){
       cout << "{" << p.first << "," <<  p.second << "},";
+
+
     }
     cout <<"}" << endl;
   }
 }
 
-void bfsTraversal(T src){
+void bfsTraversal(T src, unordered_map<T, bool> &vis){
   //adjList already data member me hai 
   //visited array 
-  unordered_map<T, bool> vis;
+  
   //queue
-  queue<T>que;
+  queue<T>q;
   
   //maintain the inital state 
-  que.push(src);
+  q.push(src);
   vis[src] = true;
 
   while(!q.empty()){
@@ -107,6 +109,19 @@ void bfsTraversal(T src){
 
 }
 
+void dfsTraversal(T src, unordered_map<T, bool>& vis){
+  vis[src] = true;
+  cout << src << " ";
+
+  for(auto nbr : adjList[src]){
+    T nbrData = nbr.first; //bcz we have weighted graph so taking our first means node data
+    if(!vis[nbrData]){
+      dfsTraversal(nbrData, vis);
+    }
+
+  }
+}
+
 
 
 
@@ -118,7 +133,7 @@ void bfsTraversal(T src){
 
 
 int main() {
- Graph g;
+//  Graph g;
  //directed edge 
 //  g.addEdge(0, 1, 1);
 //  g.addEdge(1, 2, 1);
@@ -150,10 +165,48 @@ int main() {
 // g.addEdge(3, 4, 30, 0);
 
 Graph<char> g;
-g.addEdge('a', 'b', 5, 0);
-g.addEdge('b', 'c', 10, 0);
-g.addEdge('b', 'c', 20, 0);
-g.addEdge('c','d', 40, 0);
+// g.addEdge('a', 'b', 5, 0);
+// g.addEdge('d', 'c', 5, 0);
+// g.addEdge('b', 'c', 10, 0);
+// g.addEdge('c', 'd', 10, 0);
+// g.addEdge('c', 'e', 20, 0);
+// g.addEdge('e','f', 40, 0);
+
+//for disconnected graph 
+// g.addEdge('a', 'b', 10, 0);
+// g.addEdge('b', 'c', 20, 0);
+
+// g.addEdge('d', 'e', 30, 0);
+
+// g.addEdge('f', 'f', 40, 0);
+
+// unordered_map<char, bool> vis;
+// for(char node = 'a';  node <= 'f'; node++){
+//   if(!vis[node]){
+//     g.bfsTraversal(node, vis); //doing traversal for every node 
+//   }
+// }
+
+// g.bfsTraversal('a');
+
+
+//Dfs Traversal 
+
+g.addEdge('a', 'b', 10, 0);
+// g.addEdge('a', 'c', 20, 0);
+g.addEdge('c', 'd', 30, 0);
+g.addEdge('c', 'e', 40, 0);
+g.addEdge('d', 'e', 40, 0);
+g.addEdge('e', 'f', 50, 0);
+unordered_map<char, bool> vis;
+for(char node = 'a';  node <= 'f'; node++){
+  if(!vis[node]){
+    g.dfsTraversal(node, vis);
+  }
+}
+
+g.dfsTraversal('a', vis);
+
 
 
 
