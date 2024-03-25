@@ -5,7 +5,8 @@ void dijkastraShortestPath(int n, int src, int dest){
   set<pair<int,int> > st;
 
   //maintain the initial state {0, src}
-    
+  st.push({0, src});
+  dist[src]= 0; //As the src node is independent node so, their distance will be 0.
 
    //dist update logic 
    while(!st.empty()){
