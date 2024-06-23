@@ -52,3 +52,37 @@ public:
         
     }
 };
+
+// ********************************************Approach 2 (Using multiset)*********************************************************\\
+Time Complexity - O(n log n)
+Space Complexity - O(n);
+
+class Solution {
+public:
+    int longestSubarray(vector<int>& nums, int limit) {
+        //Using memeset dataStructure 
+        //It is used to store duplicate element in sorted order
+        int n = nums.size();
+
+        multiset<int> st;
+
+        int i = 0;
+        int j = 0;
+        int maxLength = 0;
+
+        while(j < n){
+
+            st.insert(nums[j]);
+            while(*st.rbegin() - *st.begin() > limit){
+                st.erase(st.find(nums[i]));
+                i++;
+            }
+
+            maxLength = max(maxLength, j-i+1);
+            j++;
+        }
+
+        return maxLength;
+        
+    }
+};
