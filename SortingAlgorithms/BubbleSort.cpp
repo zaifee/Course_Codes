@@ -8,7 +8,7 @@ void bubbleSort(vector<int> v){
     for(int j=0; j<n-i-1; j++){
       //compare if element at index j is greater than swapping with j+1 bcz it is the smaller element
       if(v[j] > v[j+1]){
-        swap(v[j], v[j+1]);
+        swap(v[j],  v[j+1]);
       }
     }
   }
